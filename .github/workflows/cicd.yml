@@ -120,11 +120,13 @@ jobs:
                     name: crip-decrip-app
                   volumeMounts:
                   - name: crip-decrip-app-persistent-storage
-                    mountPath: /var/www/test-site.com
+                    mountPath: /usr/share/nginx/html
                 volumes:
                 - name: crip-decrip-app-persistent-storage
                   persistentVolumeClaim:
                     claimName: crip-decrip-pvc
+                  hostPath:
+                    path: /home/tucanoweb/crip-decrip-app
 
           ---
           apiVersion: v1
