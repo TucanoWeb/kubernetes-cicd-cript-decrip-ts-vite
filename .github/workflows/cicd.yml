@@ -103,6 +103,7 @@ jobs:
               requests:
                 storage: 1Gi
             storageClassName: local-path
+            volumeName: crip-decrip-pv
           ---
           apiVersion: apps/v1
           kind: Deployment
