@@ -65,6 +65,7 @@ jobs:
       - name: Deploy to Kubernetes
         run: |
           ssh tucanoweb@95.216.252.50 <<EOF
+          cd crip-decrip-app
           ls -la
           tar -xf dist.tar.gz
           microk8s kubectl create namespace httpd-namespace-devops || true
