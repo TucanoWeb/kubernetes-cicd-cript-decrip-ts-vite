@@ -76,6 +76,35 @@ jobs:
           tar -xf dist.tar.gz
           microk8s kubectl create namespace httpd-namespace-devops || true
           microk8s kubectl apply -f - <<EOFYAML
+          apiVersion: v1
+          kind: PersistentVolume
+          metadata:
+            name: crip-decrip-pv
+            namespace: httpd-namespace-devops
+          spec:
+            storageClassName: local-path
+            capacity:
+              storage: 1Gi
+            accessModes:
+              - ReadWriteOnce
+            hostPath:
+              path: /home/tucanoweb/crip-decrip-app
+
+          ---
+          apiVersion: v1
+          kind: PersistentVolumeClaim
+          metadata:
+            name: crip-decrip-pvc
+            namespace: httpd-namespace-devops
+          spec:
+            storageClassName: local-path
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: 1Gi
+
+          ---
           apiVersion: apps/v1
           kind: Deployment
           metadata:
@@ -98,11 +127,12 @@ jobs:
                   - containerPort: 80
                   volumeMounts:
                   - name: app-volume
-                    mountPath: /usr/share/nginx/html
+                    mountPath: /var/www/test-site.com
                 volumes:
                 - name: app-volume
-                  hostPath:
-                    path: /home/tucanoweb/crip-decrip-app
+                  persistentVolumeClaim:
+                    claimName: crip-decrip-pvc
+
           ---
           apiVersion: v1
           kind: Service
@@ -117,6 +147,7 @@ jobs:
               nodePort: 30005
             selector:
               app: crip-decrip-app
+
           ---
           apiVersion: networking.k8s.io/v1
           kind: Ingress
