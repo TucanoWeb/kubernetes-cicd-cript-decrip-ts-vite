@@ -50,13 +50,6 @@ jobs:
       - name: Verify build artifacts
         run: ls -la
 
-      - name: Extract build artifacts
-        uses: a7ul/tar-action@v1.1.0
-        id: extract
-        with:
-          command: x
-          files: dist.tar.gz
-
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.5.3
         with:
@@ -64,11 +57,13 @@ jobs:
 
       - name: Copy files to server
         run: |
-          scp -r dist/* tucanoweb@95.216.252.50:/home/tucanoweb/crip-decrip-app
+          scp -r dist.tar.gz tucanoweb@95.216.252.50:/home/tucanoweb/crip-decrip-app
 
       - name: Deploy to Kubernetes
         run: |
           ssh tucanoweb@95.216.252.50 <<EOF
+          ls -la
+          tar -xf dist.tar.gz
           microk8s kubectl create namespace httpd-namespace-devops || true
           microk8s kubectl apply -f - <<EOFYAML
           apiVersion: apps/v1
