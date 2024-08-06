@@ -51,9 +51,12 @@ jobs:
         run: ls -la
 
       - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.5.3
+        uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      
+      - name: Add server to known hosts
+        run: ssh-keyscan 95.216.252.50 >> ~/.ssh/known_hosts
 
       - name: Copy files to server
         run: |
