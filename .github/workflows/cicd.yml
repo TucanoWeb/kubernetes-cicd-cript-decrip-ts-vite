@@ -80,7 +80,6 @@ jobs:
           kind: PersistentVolume
           metadata:
             name: crip-decrip-pv
-            namespace: httpd-namespace-devops
           spec:
             storageClassName: local-path
             capacity:
@@ -133,15 +132,12 @@ jobs:
                   - containerPort: 80
                     name: crip-decrip-app
                   volumeMounts:
-                  - name: crip-decrip-app-persistent-storage
+                  - name: app-volume
                     mountPath: /usr/share/nginx/html
                 volumes:
-                - name: crip-decrip-app-persistent-storage
+                - name: app-volume
                   persistentVolumeClaim:
                     claimName: crip-decrip-pvc
-                  hostPath:
-                    path: /home/tucanoweb/crip-decrip-app
-
           ---
           apiVersion: v1
           kind: Service
