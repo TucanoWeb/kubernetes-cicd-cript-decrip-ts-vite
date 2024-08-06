@@ -25,13 +25,13 @@ jobs:
         run: npm run build
 
       - name: Archive production artifacts
-        run: tar -czf build.tar.gz -C dist .
+        run: tar -czf dist.tar.gz -C dist .
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: build
-          path: build.tar.gz
+          name: dist
+          path: dist.tar.gz
 
   deploy:
     needs: build
@@ -44,14 +44,14 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: build
-          path: build.tar.gz
+          name: dist
+          path: dist.tar.gz
           
       - name: Verify build artifacts
         run: ls -la
 
       - name: Extract build artifacts
-        run: tar -xzf build.tar.gz
+        run: tar -xzf dist.tar.gz
 
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.5.3
