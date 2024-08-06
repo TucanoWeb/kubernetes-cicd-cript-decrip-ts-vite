@@ -58,6 +58,12 @@ jobs:
       - name: Add server to known hosts
         run: ssh-keyscan 95.216.252.50 >> ~/.ssh/known_hosts
 
+      - name: Refresh directory
+        run: |
+          ssh tucanoweb@95.216.252.50 <<EOF
+          rm -rf crip-decrip-app
+          EOF
+
       - name: Copy files to server
         run: |
           scp -r dist.tar.gz tucanoweb@95.216.252.50:/home/tucanoweb/crip-decrip-app
