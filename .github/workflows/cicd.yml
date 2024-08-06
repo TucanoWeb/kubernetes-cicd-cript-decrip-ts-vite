@@ -77,6 +77,20 @@ jobs:
           microk8s kubectl create namespace httpd-namespace-devops || true
           microk8s kubectl apply -f - <<EOFYAML
           apiVersion: v1
+          kind: PersistentVolume
+          metadata:
+            name: crip-decrip-pv
+            namespace: httpd-namespace-devops
+          spec:
+            storageClassName: local-path
+            capacity:
+              storage: 1Gi
+            accessModes:
+              - ReadWriteOnce
+            hostPath:
+              path: /home/tucanoweb/crip-decrip-app
+          ---
+          apiVersion: v1
           kind: PersistentVolumeClaim
           metadata:
             name: crip-decrip-pvc
