@@ -99,10 +99,10 @@ jobs:
                   volumeMounts:
                   - name: app-volume
                     mountPath: /usr/share/nginx/html
-              volumes:
-              - name: app-volume
-                hostPath:
-                  path: /home/tucanoweb/crip-decrip-app
+                volumes:
+                - name: app-volume
+                  hostPath:
+                    path: /home/tucanoweb/crip-decrip-app
           ---
           apiVersion: v1
           kind: Service
