@@ -55,7 +55,6 @@ jobs:
         id: extract
         with:
           command: x
-          cwd: ./dist
           files: dist.tar.gz
 
       - name: Setup SSH
