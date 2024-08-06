@@ -51,7 +51,12 @@ jobs:
         run: ls -la
 
       - name: Extract build artifacts
-        run: tar -xzf dist.tar.gz
+        uses: a7ul/tar-action@v1.1.0
+        id: extract
+        with:
+          command: x
+          cwd: ./dist
+          files: dist.tar.gz
 
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.5.3
