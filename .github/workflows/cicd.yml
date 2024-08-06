@@ -95,6 +95,8 @@ jobs:
           kind: Deployment
           metadata:
             name: crip-decrip-app
+            labels:
+              app: crip-decrip-app
             namespace: httpd-namespace-devops
           spec:
             replicas: 3
