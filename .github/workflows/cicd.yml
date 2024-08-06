@@ -101,6 +101,9 @@ jobs:
             selector:
               matchLabels:
                 app: crip-decrip-app
+                tier: frontend
+            strategy:
+              type: Recreate
             template:
               metadata:
                 labels:
@@ -128,14 +131,14 @@ jobs:
             name: crip-decrip-app
             namespace: httpd-namespace-devops
           spec:
-            type: LoadBalancer
             ports:
-            - port: 80
+            - protocol: TCP
+              port: 80
               targetPort: 80
-              nodePort: 30005
             selector:
               app: crip-decrip-app
-
+              tier: frontend
+            type: LoadBalancer
           ---
           apiVersion: networking.k8s.io/v1
           kind: Ingress
