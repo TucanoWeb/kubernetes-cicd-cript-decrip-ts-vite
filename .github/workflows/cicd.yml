@@ -149,8 +149,7 @@ jobs:
             namespace: httpd-namespace-devops
           spec:
             rules:
-            - host: myapp.local
-              http:
+            - http:
                 paths:
                 - path: /
                   pathType: Prefix
