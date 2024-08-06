@@ -170,6 +170,12 @@ jobs:
                       port:
                         number: 80
           EOFYAML
+          EOF
+
+      - name: Copy files to directory nginx
+        run: |
+          ssh tucanoweb@95.216.252.50 <<EOF
+          cd cript-decrip-app
           POD_NAME=$(microk8s kubectl get pods -n httpd-namespace-devops -l app=crip-decrip-app -o jsonpath='{.items[0].metadata.name}')
           microk8s kubectl cp -n httpd-namespace-devops . $POD_NAME:/usr/share/nginx/html
           EOF
