@@ -46,6 +46,9 @@ jobs:
         with:
           name: build
           path: build.tar.gz
+          
+      - name: Verify build artifacts
+        run: ls -la
 
       - name: Extract build artifacts
         run: tar -xzf build.tar.gz
