@@ -175,8 +175,7 @@ jobs:
       - name: Copy files to directory nginx
         run: |
           ssh tucanoweb@95.216.252.50 <<EOF
-          cd crip-decrip-app
           POD_NAME=$(microk8s kubectl get pods -n httpd-namespace-devops -l app=crip-decrip-app -o jsonpath='{.items[0].metadata.name}')
-          echo $POD_NAME
+          cd crip-decrip-app
           microk8s kubectl cp -n httpd-namespace-devops . $POD_NAME:/usr/share/nginx/html
           EOF
