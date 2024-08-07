@@ -177,5 +177,9 @@ jobs:
           ssh tucanoweb@95.216.252.50 <<EOF
           export PATH=\$PATH:/snap/bin
           POD_NAME=\$(/snap/bin/microk8s kubectl get pods -n httpd-namespace-devops -l app=crip-decrip-app -o jsonpath='{.items[0].metadata.name}')
-          /snap/bin/microk8s kubectl cp /home/tucanoweb/crip-decrip-app $POD_NAME:/usr/share/nginx/html -n httpd-namespace-devops
+          cd /home/tucanoweb/crip-decrip-app
+          tar -czf app-content.tar.gz ./*
+          /snap/bin/microk8s kubectl cp app-content.tar.gz httpd-namespace-devops/\$POD_NAME:/usr/share/nginx/html/app-content.tar.gz
+          /snap/bin/microk8s kubectl exec -n httpd-namespace-devops \$POD_NAME -- tar -xzf /usr/share/nginx/html/app-content.tar.gz -C /usr/share/nginx/html
+          /snap/bin/microk8s kubectl exec -n httpd-namespace-devops \$POD_NAME -- rm /usr/share/nginx/html/app-content.tar.gz
           EOF
