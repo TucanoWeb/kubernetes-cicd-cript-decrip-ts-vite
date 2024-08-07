@@ -1,6 +1,6 @@
 [![Linkedin](https://img.shields.io/static/v1.svg?logo=linkedin&color=f78A38&labelColor=083468&logoColor=ffffff&style=for-the-badge&label=Linkedin&message=Public)](https://www.linkedin.com/in/eric-ricielle-2aa1ba237/) [![Elestio examples](https://img.shields.io/static/v1.svg?logo=github&color=f78A38&labelColor=083468&logoColor=ffffff&style=for-the-badge&label=github&message=open%20source)](https://github.com/TucanoWeb) [![Whatsapp](https://img.shields.io/static/v1.svg?logo=whatsapp&color=f78A38&labelColor=083468&logoColor=ffffff&style=for-the-badge&label=Whatsapp&message=Tirar%20Dúvidas)](https://api.whatsapp.com/send?phone=5531992936042)
 
-# Cript and Decript by TucanoWeb with ReactJS
+# Cript and Decript by TucanoWeb with ReactJS AND CICD Pipeline with Kubernertes
 
 Project made for one of my students, using ReactJS, TS, Eslint, and Vite.
 
@@ -21,6 +21,12 @@ Yet in the root of the project, run the command:
 ```bash
 npm run dev
 ```
+
+## workflow
+
+.github/workflows/cicd.yml
+
+NOTE: Store your secrect keys in Settings > Secrets and variables > Actions, in the New Repository Secrect option. Remember of create with the same name (the recognize of the secret name is case sensitive) of the secrets of the workflow or adjust the code if want change the secrets names. 
 
 ## List of Libraries
 
