@@ -56,21 +56,21 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       
       - name: Add server to known hosts
-        run: ssh-keyscan 95.216.252.50 >> ~/.ssh/known_hosts
+        run: ssh-keyscan ${{ secrets.SSH_SERVER }} >> ~/.ssh/known_hosts
 
       - name: Refresh directory
         run: |
-          ssh tucanoweb@95.216.252.50 <<EOF
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} <<EOF
           rm -rf crip-decrip-app
           EOF
 
       - name: Copy files to server
         run: |
-          scp -r dist.tar.gz tucanoweb@95.216.252.50:/home/tucanoweb/crip-decrip-app
+          scp -r dist.tar.gz tucanoweb@95.216.252.50:/home/${{ secrets.SSH_USER }}/crip-decrip-app
 
       - name: Deploy to Kubernetes
         run: |
-          ssh tucanoweb@95.216.252.50 <<EOF
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} <<EOF
           cd crip-decrip-app
           ls -la
           tar -xf dist.tar.gz
@@ -86,7 +86,7 @@ jobs:
             accessModes:
               - ReadWriteOnce
             hostPath:
-              path: /home/tucanoweb/crip-decrip-app
+              path: /home/${{ secrets.SSH_USER }}/crip-decrip-app
           ---
           apiVersion: v1
           kind: PersistentVolumeClaim
@@ -174,10 +174,10 @@ jobs:
 
       - name: Copy files to directory nginx
         run: |
-          ssh tucanoweb@95.216.252.50 <<EOF
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} <<EOF
           export PATH=\$PATH:/snap/bin
           POD_NAME=\$(/snap/bin/microk8s kubectl get pods -n httpd-namespace-devops -l app=crip-decrip-app -o jsonpath='{.items[0].metadata.name}')
-          cd /home/tucanoweb/crip-decrip-app
+          cd /home/${{ secrets.SSH_USER }}/crip-decrip-app
           tar -czf app-content.tar.gz ./*
           /snap/bin/microk8s kubectl cp app-content.tar.gz httpd-namespace-devops/\$POD_NAME:/usr/share/nginx/html/app-content.tar.gz
           /snap/bin/microk8s kubectl exec -n httpd-namespace-devops \$POD_NAME -- tar -xzf /usr/share/nginx/html/app-content.tar.gz -C /usr/share/nginx/html
