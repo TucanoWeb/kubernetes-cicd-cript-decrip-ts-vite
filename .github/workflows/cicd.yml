@@ -66,7 +66,7 @@ jobs:
 
       - name: Copy files to server
         run: |
-          scp -r dist.tar.gz tucanoweb@95.216.252.50:/home/${{ secrets.SSH_USER }}/crip-decrip-app
+          scp -r dist.tar.gz ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }}:/home/${{ secrets.SSH_USER }}/crip-decrip-app
 
       - name: Deploy to Kubernetes
         run: |
