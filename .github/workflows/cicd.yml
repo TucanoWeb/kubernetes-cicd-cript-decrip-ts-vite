@@ -177,5 +177,5 @@ jobs:
           ssh tucanoweb@95.216.252.50 <<EOF
           POD_NAME=$(microk8s kubectl get pods -n httpd-namespace-devops -l app=crip-decrip-app -o jsonpath='{.items[0].metadata.name}')
           cd crip-decrip-app
-          microk8s kubectl cp -n httpd-namespace-devops . $POD_NAME:/usr/share/nginx/html
+          microk8s kubectl cp . httpd-namespace-devops/$POD_NAME:/usr/share/nginx/html
           EOF
