@@ -175,7 +175,7 @@ jobs:
       - name: Copy files to directory nginx
         run: |
           ssh tucanoweb@95.216.252.50 <<EOF
-          source /snap/microk8s/current/microk8s-env
-          POD_NAME=\$(microk8s kubectl get pods -n httpd-namespace-devops -l app=crip-decrip-app -o jsonpath='{.items[0].metadata.name}')
-          microk8s kubectl cp ./crip-decrip-app $POD_NAME:/usr/share/nginx/html -n httpd-namespace-devops
+          export PATH=\$PATH:/snap/bin
+          POD_NAME=\$(/snap/bin/microk8s kubectl get pods -n httpd-namespace-devops -l app=crip-decrip-app -o jsonpath='{.items[0].metadata.name}')
+          /snap/bin/microk8s kubectl cp /home/tucanoweb/crip-decrip-app $POD_NAME:/usr/share/nginx/html -n httpd-namespace-devops
           EOF
